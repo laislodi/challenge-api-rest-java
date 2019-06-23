@@ -29,12 +29,15 @@ public class ContaService {
         return (List<Conta>) contaRepository.findAll();
     }
 
-    public Conta findById(Long id) {
-        Optional<Conta> optionalConta = contaRepository.findById(id);
-        if (!optionalConta.isPresent()) {
+    private void existVerification(Long id) {
+        if (!contaRepository.existsById(id)) {
             throw new ContaNaoEncontrada(MSG_CONTA_NAO_ENCONTRADA, CODE_CONTA_NAO_ENCONTRADA);
         }
-        return optionalConta.get();
+    }
+
+    public Conta findById(Long id) {
+        existVerification(id);
+        return contaRepository.findById(id).get();
     }
 
     public void save(Conta conta) {
@@ -42,12 +45,12 @@ public class ContaService {
     }
 
     public void updateConta(Long id, Conta conta) {
-        findById(id);
+        existVerification(id);
         save(conta);
     }
 
     public void logicDeleteById(Long id) {
-        findById(id);
+        existVerification(id);
         contaCustomRepository.logicDeleteById(id);
     }
 }
