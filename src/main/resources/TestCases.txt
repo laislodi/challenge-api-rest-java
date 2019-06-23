@@ -1,0 +1,136 @@
+POST: http://localhost:8080/api/conta
+input 1:
+{
+    "numero": "109281",
+    "agencia": "1234",
+    "cpf": "12345678901",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+output 1: 200 OK
+
+input 2:
+{
+    "numero": "109282",
+    "agencia": "1234",
+    "cpf": "123456789012",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+output: 500 Internal Server Error
+{
+    "timestamp": "2019-06-23T04:07:34.822+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement",
+    "path": "/api/conta"
+}
+
+input 3:
+{
+    "numero": "109282",
+    "agencia": "1234",
+    "cpf": "1234567890",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+output: 200 Ok
+
+--------------------------------------------------------------------
+
+GET: http://localhost:8080/api/conta
+output:
+[
+    {
+    	"id" : 1,
+        "numero": "109281",
+        "agencia": "1234",
+        "cpf": "12345678901",
+        "status": "true",
+        "dataCriacao" : "22-06-2019",
+        "dataAtualizacao" : "22-06-2019"
+    },
+    {
+    	"id" : 2,
+        "numero": "109282",
+        "agencia": "1234",
+        "cpf": "1234567890",
+        "status": "true",
+        "dataCriacao" : "22-06-2019",
+        "dataAtualizacao" : "22-06-2019"
+    }
+]
+
+-------------------------------------------------------------
+
+GET: http://localhost:8080/api/conta/1
+{
+    "id" : 1,
+    "numero": "109281",
+    "agencia": "1234",
+    "cpf": "12345678901",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+
+GET: http://localhost:8080/api/conta/4
+output: 500 Internal Server Error
+{
+    "timestamp": "2019-06-23T04:36:04.841+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "CONTA_NAO_ENCONTRADA",
+    "path": "/api/conta/1"
+}
+
+-------------------------------------------------------------
+
+PUT: http://localhost:8080/api/conta/9
+input:
+{
+    "numero": "109283",
+    "agencia": "1234",
+    "cpf": "12345678903",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+output:
+{
+    "timestamp": "2019-06-23T04:38:44.046+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "CONTA_NAO_ENCONTRADA",
+    "path": "/api/conta/9"
+}
+
+PUT: http://localhost:8080/api/conta/1
+input:
+{
+    "numero": "109283",
+    "agencia": "1234",
+    "cpf": "12345678903",
+    "status": "true",
+    "dataCriacao" : "22-06-2019",
+    "dataAtualizacao" : "22-06-2019"
+}
+output: 200 Ok
+
+-------------------------------------------------------------
+
+DELETE: http://localhost:8080/api/conta/9
+output:
+{
+    "timestamp": "2019-06-23T04:42:32.300+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "CONTA_NAO_ENCONTRADA",
+    "path": "/api/conta/9"
+}
+
+DELETE: http://localhost:8080/api/conta/1
+output: Ok
